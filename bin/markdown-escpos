@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require 'rdoc/rdoc'
+require 'markdown-escpos'
+
+formatter = MarkdownEscPos::ToEscPosFormat.new(RDoc::Options.new, nil)
+puts RDoc::Markdown.parse(ARGF.read).accept(formatter)
+
