@@ -3,6 +3,9 @@
 require 'rdoc/rdoc'
 require 'markdown-escpos'
 
-formatter = MarkdownEscPos::ToEscPosFormat.new(RDoc::Options.new, nil)
-puts RDoc::Markdown.parse(ARGF.read).accept(formatter)
+clazz = MarkdownEscPos::ToEscPosFormat
+#clazz = RDoc::Markup::ToHtml
 
+formatter = clazz.new(RDoc::Options.new, nil)
+
+puts RDoc::Markdown.parse(ARGF.read).accept(formatter)

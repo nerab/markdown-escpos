@@ -12,7 +12,7 @@ GEM
     debug_inspector (0.0.2)
     ffi (1.9.10)
     formatador (0.2.5)
-    guard (2.13.0)
+    guard (2.12.8)
       formatador (>= 0.2.4)
       listen (>= 2.7, <= 4.0)
       lumberjack (~> 1.0)
@@ -33,14 +33,14 @@ GEM
       ffi
       guard (~> 2.3)
       spoon
-    listen (3.0.3)
+    listen (3.0.1)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     lumberjack (1.0.9)
     method_source (0.8.2)
     minitest (4.7.5)
     nenv (0.2.0)
-    notiffany (0.0.7)
+    notiffany (0.0.6)
       nenv (~> 0.1)
       shellany (~> 0.0)
     pry (0.10.1)
@@ -54,7 +54,6 @@ GEM
     rb-fsevent (0.9.5)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    rb-readline (0.5.3)
     shellany (0.0.1)
     slop (3.6.0)
     spoon (0.0.4)
@@ -75,9 +74,3 @@ DEPENDENCIES
   pry
   pry-stack_explorer
   rake
-  rb-fsevent
-  rb-inotify
-  rb-readline
-
-BUNDLED WITH
-   1.10.6
