@@ -1,4 +1,4 @@
-require "rdoc"
+require 'rdoc'
 
 module MarkdownEscPos
   class ToEscPosFormat < RDoc::Markup::Formatter
@@ -6,6 +6,7 @@ module MarkdownEscPos
 
     LINE_BREAK = "\n"
     INDENT = '  '
+    MAX_COLUMNS = 32
 
     attr_reader :res, :list
 
@@ -25,8 +26,8 @@ module MarkdownEscPos
         prefix = @block_quote_stack.join + ' '
       end
 
-      # TODO 32 - length of indentation
-      wrapped_paragraphs = wrap(paragraph.text, 29).split(LINE_BREAK)
+      max_columns = MAX_COLUMNS - INDENT.length - 1
+      wrapped_paragraphs = wrap(paragraph.text, max_columns).split(LINE_BREAK)
 
       @res << "#{prefix}#{wrapped_paragraphs[0]}#{LINE_BREAK}"
 

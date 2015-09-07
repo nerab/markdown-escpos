@@ -7,7 +7,19 @@ class BlockQuoteTest < MiniTest::Unit::TestCase
     @formatter = MarkdownEscPos::ToEscPosFormat.new(RDoc::Options.new, nil)
   end
 
-  def test_block_quote_wrapping
+  def test_block_quote_nesting_level_1
+    fixture = "> a b c d e f g h i j k l m n o p q r s t u v w x y z"
+
+    result = to_esc_pos(fixture)
+
+    assert_equal(4, result.lines.size)
+    assert_equal("\n", result.lines[0])
+    assert_equal("| a b c d e f g h i j k l m n\n", result.lines[1])
+    assert_equal("| o p q r s t u v w x y z\n", result.lines[2])
+    assert_equal("\n", result.lines[3])
+  end
+
+  def test_block_quote_multiline_wrapping
     fixture = "> This is supposed to be a block-quoted bunch of characters, wrapped at word boundaries and not exceeding the overall line length of 32 characters."
 
     result = to_esc_pos(fixture)
