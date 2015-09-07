@@ -12,7 +12,7 @@ class BulletedListTest < MiniTest::Unit::TestCase
 
     result = to_esc_pos(fixture)
 
-    assert_equal(25, result.lines.size)
+    assert_equal(29, result.lines.size)
     assert_equal('* ', result.lines[4][0..1])
 
     result.lines.each.with_index do |p, i|

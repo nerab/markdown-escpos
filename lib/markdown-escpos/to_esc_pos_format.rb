@@ -4,6 +4,9 @@ module MarkdownEscPos
   class ToEscPosFormat < RDoc::Markup::Formatter
     include RDoc::Text # helpers like wrap
 
+    LINE_BREAK = "\n"
+    INDENT = '  '
+
     attr_reader :res, :list
 
     def start_accepting
@@ -23,12 +26,12 @@ module MarkdownEscPos
       end
 
       # TODO 32 - length of indentation
-      wrapped_paragraphs = wrap(paragraph.text, 29).split("\n")
+      wrapped_paragraphs = wrap(paragraph.text, 29).split(LINE_BREAK)
 
-      @res << "#{prefix}#{wrapped_paragraphs[0]}\n"
+      @res << "#{prefix}#{wrapped_paragraphs[0]}#{LINE_BREAK}"
 
-      indentation = '  ' * @list_stack.size
-      @res << wrapped_paragraphs[1..-1].map{|p| "#{prefix}#{indentation}#{p}\n"}
+      indentation = INDENT * @list_stack.size
+      @res << wrapped_paragraphs[1..-1].map{|p| "#{prefix}#{indentation}#{p}#{LINE_BREAK}"}
     end
 
     def accept_raw raw
@@ -36,11 +39,11 @@ module MarkdownEscPos
     end
 
     def accept_verbatim(verbatim)
-      @res << verbatim.text.gsub(/^(\S)/, '  \1')
+      @res << verbatim.text.gsub(/^(\S)/, INDENT + '\1')
     end
 
     def accept_list_start(list)
-      @res << "\n"
+      @res << LINE_BREAK
       @list << case list.type
                when :BULLET then
                  '*'
@@ -60,7 +63,7 @@ module MarkdownEscPos
         @res << tag
       end
 
-      @res << "\n"
+      @res << LINE_BREAK
     end
 
     def accept_list_item_start(list_item)
@@ -68,7 +71,7 @@ module MarkdownEscPos
         @res << tag
       end
 
-      @res << "#{'  ' * (@list.size - 1)}#{@list.last} "
+      @res << "#{INDENT * (@list.size - 1)}#{@list.last} "
     end
 
     def accept_list_item_end(list_item)
@@ -76,7 +79,7 @@ module MarkdownEscPos
     end
 
     def accept_blank_line(blank_line)
-      @res << "\n"
+      @res << LINE_BREAK
     end
 
     def accept_rule(rule)
@@ -84,23 +87,23 @@ module MarkdownEscPos
     end
 
     def accept_heading(heading)
-      @res << send("heading#{heading.level}", heading.text) << "\n\n"
+      @res << send("heading#{heading.level}", heading.text) << LINE_BREAK << LINE_BREAK
     end
 
     def accept_block_quote(block_quote)
-      @res << "\n"
+      @res << LINE_BREAK
       @block_quote_stack.push('|')
 
       block_quote.parts.each do |part|
         part.accept(self)
       end
 
-      @res << "\n"
+      @res << LINE_BREAK
       @block_quote_stack.pop
     end
 
     def handle_special_HARD_BREAK special
-      @res << "\n"
+      @res << LINE_BREAK
     end
 
   private

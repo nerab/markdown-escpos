@@ -195,7 +195,7 @@ class RDocToEscPosFormatTest < RDoc::Markup::FormatterTestCase
   end
 
   def accept_block_quote
-    assert_equal("\n  | quote\n\n", @to.res.join)
+    assert_equal("\n| quote\n\n", @to.res.join)
   end
 
   def accept_heading
@@ -215,6 +215,7 @@ class RDocToEscPosFormatTest < RDoc::Markup::FormatterTestCase
   end
 
   def accept_paragraph_br
-    assert_equal("\none\ntwo\n", @to.res.join)
+    # This test checks for a br to pass through, so we take it literally
+    assert_equal("one<br>two\n", @to.res.join)
   end
 end
