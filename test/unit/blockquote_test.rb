@@ -12,11 +12,29 @@ class BlockQuoteTest < MiniTest::Unit::TestCase
 
     result = to_esc_pos(fixture)
 
-    assert_equal(4, result.lines.size)
-    assert_equal("\n", result.lines[0])
-    assert_equal("| a b c d e f g h i j k l m n\n", result.lines[1])
-    assert_equal("| o p q r s t u v w x y z\n", result.lines[2])
-    assert_equal("\n", result.lines[3])
+    assert_equal(2, result.lines.size)
+    assert_equal("| a b c d e f g h i j k l m n o\n", result.lines[0])
+    assert_equal("| p q r s t u v w x y z\n", result.lines[1])
+  end
+
+  def test_block_quote_nesting_level_2
+    fixture = ">> a b c d e f g h i j k l m n o p q r s t u v w x y z"
+
+    result = to_esc_pos(fixture)
+
+    assert_equal(2, result.lines.size)
+    assert_equal("|| a b c d e f g h i j k l m n o\n", result.lines[0])
+    assert_equal("|| p q r s t u v w x y z\n", result.lines[1])
+  end
+
+  def test_block_quote_nesting_level_3
+    fixture = ">>> a b c d e f g h i j k l m n o p q r s t u v w x y z"
+
+    result = to_esc_pos(fixture)
+
+    assert_equal(2, result.lines.size)
+    assert_equal("||| a b c d e f g h i j k l m n\n", result.lines[0])
+    assert_equal("||| o p q r s t u v w x y z\n", result.lines[1])
   end
 
   def test_block_quote_multiline_wrapping

@@ -18,6 +18,7 @@ module MarkdownEscPos
     end
 
     def end_accepting
+      @res.pop if "\n" == @res.flatten.last[-1]
       @res.join
     end
 
@@ -26,13 +27,15 @@ module MarkdownEscPos
         prefix = @block_quote_stack.join + ' '
       end
 
-      max_columns = MAX_COLUMNS - INDENT.length - 1
+      max_columns = MAX_COLUMNS - @block_quote_stack.size
       wrapped_paragraphs = wrap(paragraph.text, max_columns).split(LINE_BREAK)
 
       @res << "#{prefix}#{wrapped_paragraphs[0]}#{LINE_BREAK}"
 
-      indentation = INDENT * @list_stack.size
-      @res << wrapped_paragraphs[1..-1].map{|p| "#{prefix}#{indentation}#{p}#{LINE_BREAK}"}
+      list_indentation = INDENT * @list_stack.size
+      @res << wrapped_paragraphs[1..-1].map{|p| "#{prefix}#{list_indentation}#{p}#{LINE_BREAK}"}
+
+      @res << LINE_BREAK
     end
 
     def accept_raw raw
@@ -44,7 +47,6 @@ module MarkdownEscPos
     end
 
     def accept_list_start(list)
-      @res << LINE_BREAK
       @list << case list.type
                when :BULLET then
                  '*'
@@ -63,8 +65,6 @@ module MarkdownEscPos
       if tag = @list_stack.pop
         @res << tag
       end
-
-      @res << LINE_BREAK
     end
 
     def accept_list_item_start(list_item)
@@ -92,14 +92,12 @@ module MarkdownEscPos
     end
 
     def accept_block_quote(block_quote)
-      @res << LINE_BREAK
       @block_quote_stack.push('|')
 
       block_quote.parts.each do |part|
         part.accept(self)
       end
 
-      @res << LINE_BREAK
       @block_quote_stack.pop
     end
 
