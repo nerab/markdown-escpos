@@ -25,18 +25,17 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'minitest', '~> 4.0'
 
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-bundler'
   spec.add_development_dependency 'guard-rack'
-  spec.add_development_dependency 'minitest', '~> 4.0'
   spec.add_development_dependency 'guard-minitest'
 
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'pry-stack_explorer'
 
-#  spec.add_development_dependency 'rb-inotify'
-#  spec.add_development_dependency 'rb-fsevent'
-#  spec.add_development_dependency 'rb-readline'
+  spec.add_development_dependency 'rb-inotify'
+  spec.add_development_dependency 'rb-fsevent'
+  spec.add_development_dependency 'rb-readline'
 end
