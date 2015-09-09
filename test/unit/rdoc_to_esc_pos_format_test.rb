@@ -23,7 +23,7 @@ class RDocToEscPosFormatTest < RDoc::Markup::FormatterTestCase
   end
 
   def accept_list_item_start_bullet
-    assert_equal("\n* ", @to.res.join)
+    assert_equal("* ", @to.res.join)
   end
 
   def accept_document
@@ -147,7 +147,7 @@ class RDocToEscPosFormatTest < RDoc::Markup::FormatterTestCase
   end
 
   def accept_list_start_bullet
-    assert_equal("\n", @to.res.join)
+    assert_empty(@to.res.join)
   end
 
   def accept_list_item_start_label
@@ -155,7 +155,7 @@ class RDocToEscPosFormatTest < RDoc::Markup::FormatterTestCase
   end
 
   def accept_list_end_bullet
-    assert_equal("\n\n", @to.res.join)
+    assert_equal("", @to.res.join)
   end
 
   def accept_list_item_start_ualpha
@@ -187,7 +187,7 @@ class RDocToEscPosFormatTest < RDoc::Markup::FormatterTestCase
   end
 
   def accept_list_item_end_bullet
-    assert_equal("\n* ", @to.res.join)
+    assert_equal("* ", @to.res.join)
   end
 
   def list_nested
@@ -195,7 +195,7 @@ class RDocToEscPosFormatTest < RDoc::Markup::FormatterTestCase
   end
 
   def accept_block_quote
-    assert_equal("\n| quote\n\n", @to.res.join)
+    assert_equal("| quote\n\n", @to.res.join)
   end
 
   def accept_heading
@@ -216,6 +216,6 @@ class RDocToEscPosFormatTest < RDoc::Markup::FormatterTestCase
 
   def accept_paragraph_br
     # This test checks for a br to pass through, so we take it literally
-    assert_equal("one<br>two\n", @to.res.join)
+    assert_equal("one<br>two\n\n", @to.res.join)
   end
 end
