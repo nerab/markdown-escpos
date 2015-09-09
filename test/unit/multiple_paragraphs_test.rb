@@ -1,10 +1,9 @@
 require 'test_helper'
 
-class MultipleParagraphsTest < MiniTest::Unit::TestCase
-  include TestHelpers
+class MultipleParagraphsTest < EscPosTest
 
   def setup
-    @formatter = MarkdownEscPos::ToEscPosFormat.new(RDoc::Options.new, nil)
+    super
     @expected = <<EOM
 This is the first sentence.
 There are more in this
@@ -26,17 +25,13 @@ EOM
     fixture = fixture('multiple_paragraphs.markdown')
 
     result = to_esc_pos(fixture)
+    assert_length_limit(result)
+
     result_lines = result.lines
     expected_lines = @expected.lines
 
     @expected.lines.each.with_index do |expected_line, i|
       assert_equal(expected_line, result.lines[i])
     end
-  end
-
-private
-
-  def to_esc_pos(io)
-    RDoc::Markdown.parse(io).accept(@formatter)
   end
 end

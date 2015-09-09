@@ -19,7 +19,7 @@ class RDocToEscPosFormatTest < RDoc::Markup::FormatterTestCase
   end
 
   def accept_rule
-    skip
+    assert_equal("________________________________\n\n", @to.res.join)
   end
 
   def accept_list_item_start_bullet

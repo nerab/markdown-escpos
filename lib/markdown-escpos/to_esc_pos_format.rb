@@ -84,7 +84,11 @@ module MarkdownEscPos
     end
 
     def accept_rule(rule)
-      @res << '-' * rule.weight
+      if 1 != rule.weight
+        STDERR.puts "Warning: Ignoring rule weight #{rule.weight}"
+      end
+
+      @res << "________________________________\n\n"
     end
 
     def accept_heading(heading)
@@ -101,8 +105,20 @@ module MarkdownEscPos
       @block_quote_stack.pop
     end
 
-    def handle_special_HARD_BREAK special
+    def handle_special_HARD_BREAK(special)
       @res << LINE_BREAK
+    end
+
+    def handle_special_HYPERLINK(special)
+      @res << special.text
+    end
+
+    def accept_hard_break(hard_break)
+      raise 'Not implemented yet'
+    end
+
+    def accept_indented_paragraph(paragraph)
+      raise 'Not implemented yet'
     end
 
   private
